@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS3 Transitions, Animations, and LocalStorage</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+            transition: background-color 0.3s ease;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+
+        /* CSS animation */
+        @keyframes colorChange {
+            0% {
+                background-color: #4CAF50;
+            }
+            50% {
+                background-color: #45a049;
+            }
+            100% {
+                background-color: #4CAF50;
+            }
+        }
+
+        button:hover {
+            animation: colorChange 1s ease-in-out infinite;
+        }
+
+        /* Dark and Light Themes */
+        .dark-theme {
+            background-color: #333;
+            color: white;
+        }
+
+        .light-theme {
+            background-color: #f4f4f4;
+            color: black;
+        }
+
+        /* Bounce Animation */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        button.bounce {
+            animation: bounce 1s ease-in-out;
+        }
+
+        /* Container for buttons */
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>CSS3 Transitions, Animations, and LocalStorage</h1>
+        
+        <!-- Animation-triggering button -->
+        <button id="animatedButton" onclick="animateButton()">Click me to Animate</button>
+        
+        <!-- Theme toggling button -->
+        <button onclick="toggleTheme()">Toggle Dark/Light Theme</button>
+    </div>
+
+    <script>
+        // JavaScript to toggle theme between dark and light
+        function toggleTheme() {
+            const currentTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+
+            // Toggle between dark and light theme
+            if (currentTheme === 'dark') {
+                document.body.classList.remove('dark-theme');
+                document.body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.remove('light-theme');
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check localStorage for saved theme preference and apply it
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.classList.add(savedTheme + '-theme');
+            }
+        });
+
+        // JavaScript function to trigger animation on button click
+        function animateButton() {
+            const button = document.getElementById('animatedButton');
+            button.classList.add('bounce');
+            
+            // Remove the animation class after animation completes
+            setTimeout(() => {
+                button.classList.remove('bounce');
+            }, 1000); // Duration of animation
+        }
+    </script>
+
+</body>
+</html>
